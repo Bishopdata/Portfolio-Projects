@@ -18,7 +18,7 @@ ORDER BY 1,2
 -- query 2
 -- Rough estimate of your risk of dying from covid in Nigeria
 SELECT
-location, date, ((cast(total_deaths as float))/total_cases)*100 as deathpercent, total_cases, total_deaths
+location, date, total_cases, total_deaths, ((cast(total_deaths as float))/total_cases)*100 as deathpercent
 FROM [Portfolio Project]..[covid deaths]
 WHERE location='nigeria'
 ORDER BY 1,2
@@ -194,4 +194,5 @@ WHERE dea.continent is not null
 
 --selecting from the views
 select *
+
 FROM Percentagepopulationvaccinated
