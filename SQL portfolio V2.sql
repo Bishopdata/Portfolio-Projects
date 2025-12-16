@@ -89,24 +89,18 @@ ORDER BY
     1,2
 
 -- total deaths and total cases
-SELECT
-    --date, 
+SELECT 
     SUM(new_cases) AS total_cases, 
-    SUM(new_deaths) AS total_deaths, 
-    CASE 
-        WHEN SUM(new_cases) = 0 THEN 0 -- NULL
-        ELSE SUM(new_deaths)/SUM(new_cases)*100
-    END AS deathpercent
+    SUM(new_deaths) AS total_deaths,
+	SUM(new_deaths)/SUM(new_cases)*100 as death_percent
 FROM 
     [Portfolio Project]..[covid deaths]
 WHERE 
     continent IS not NULL
---GROUP BY date
-ORDER BY 
-    1,2
 
 --query 8
 -- total population vs total vaccinations
+
 Select 
 	dea.continent, 
 	dea.location, 
@@ -114,7 +108,7 @@ Select
 	dea.population, 
 	vac.new_vaccinations,
 	Sum(cast(vac.new_vaccinations AS bigint)) 
-	OVER(Partition by dea.location order by dea.location, dea.date) as cumulative_vaccination
+	OVER(Partition by dea.location ORDER BY dea.location, dea.date) as cumulative_vaccination
 FROM [Portfolio Project]..[covid deaths] dea
 Join [Portfolio Project]..[covid vaccinations] vac
 	on dea.location = vac.location
@@ -197,4 +191,5 @@ WHERE dea.continent is not null
 select *
 
 FROM Percentagepopulationvaccinated
+
 
